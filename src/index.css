@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@theme {
+  --color-ruby: #0E240E;
+  --color-ruby2: #183D18;
+  --color-gold: #d4a94f;
+  --color-gold2: #f0d58a;
+  --color-ivory: #f8ecd0;
+  --color-muted: #d9c49a;
+  --font-kh: "Battambang", "Noto Serif Khmer", serif;
+  --font-head: "Moul", "Battambang", serif;
+  --font-en: "Cormorant Garamond", Georgia, serif;
+  --font-moulpali: "Moulpali", "Moul", serif;
+  --font-pinyon: "Pinyon Script", cursive;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--color-ruby);
+  color: var(--color-ivory);
+  font-family: var(--font-kh);
+  line-height: 1.8;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M24 4l8 20-8 20-8-20z' fill='none' stroke='%23d4a94f' stroke-opacity='.13' stroke-width='1'/%3E%3Ccircle cx='24' cy='24' r='3' fill='%23d4a94f' fill-opacity='.13'/%3E%3C/svg%3E");
+}
+/* Kbach-style border band */
+.band {
+  height: 100px; margin: 0 auto; max-width: 640px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22'%3E%3Cpath d='M22 2l9 9-9 9-9-9z' fill='none' stroke='%23d4a94f' stroke-width='1.4'/%3E%3Cpath d='M22 7l4 4-4 4-4-4z' fill='%23d4a94f'/%3E%3Cpath d='M0 11h11M33 11h11' stroke='%23d4a94f' stroke-width='1'/%3E%3C/svg%3E") center / 44px 22px repeat-x;
+}
+:focus-visible { outline: 2px solid var(--color-gold2); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .spin { animation: none !important; } }
+
+/* ---- motion ---- */
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.1); } }
+.kenburns { animation: kenburns 10s ease-in-out infinite alternate; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.fadein { animation: fadein .3s ease-out; }
+.petal {
+  position: absolute; top: 0; width: 12px; height: 16px; opacity: 0;
+  background: linear-gradient(135deg, var(--color-gold2), var(--color-gold));
+  border-radius: 0 100% 0 100%;
+  animation: petal-fall linear infinite;
+}
+@keyframes petal-fall {
+  0%   { transform: translate3d(0, -6svh, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: .85; }
+  90%  { opacity: .7; }
+  100% { transform: translate3d(var(--drift), 104svh, 0) rotate(560deg); opacity: 0; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .petal, .kenburns, .fadein { animation: none !important; } .petal { display: none; } }
+
+.boot { position: fixed; inset: 0; background: var(--color-ruby); display: flex; align-items: center; justify-content: center; }
+.boot span { width: 34px; height: 34px; border: 2px solid var(--color-gold); transform: rotate(45deg); animation: boot-pulse 1.4s ease-in-out infinite; }
+@keyframes boot-pulse { 50% { transform: rotate(45deg) scale(.6); opacity: .5; } }
+
+/* ---- shine sweep on gold text ---- */
+.shine {
+  color: transparent;
+  background-image: linear-gradient(205deg, var(--color-gold) 0%, var(--color-gold) 44%, #fffbe6 50%, var(--color-gold) 56%, var(--color-gold) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .7));
+  animation: shine 10s ease-in-out infinite;
+
+  padding: 0.4em 0.2em;   /* bigger painted area, so tall marks are not cut */
+  /* margin: -0.4em -0.2em;  cancels the padding, so spacing stays the same */
+}
+@keyframes shine { 0% { background-position: 100% 0; } 60%, 100% { background-position: 0% 0; } }
+@media (prefers-reduced-motion: reduce) { .shine { animation: none; background: none; color: var(--color-gold); } }
+
+@keyframes open { from { transform: scale(1); } to { transform: scale(1.1); } }
+.open { animation: open 1s ease-in-out infinite alternate; }
+
